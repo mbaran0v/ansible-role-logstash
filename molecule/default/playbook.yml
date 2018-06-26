@@ -3,6 +3,12 @@
   hosts: all
 
   vars:
+
+    yum_java_packages:
+      - java-1.8.0-openjdk-headless
+    apt_java_packages:
+      - openjdk-8-jre-headless
+
     logstash_inputs: |
       beats {
         port => 5044
@@ -13,4 +19,5 @@
       import_tasks: preconf.yml
 
   roles:
+    - role: geerlingguy.java
     - role: ansible-role-logstash
