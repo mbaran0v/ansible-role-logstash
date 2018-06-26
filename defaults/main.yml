@@ -1,0 +1,27 @@
+---
+
+logstash_major_version: "6.x"
+logstash_version: "6.3.0"
+
+logstash_version_lock: false
+logstash_use_repository: true
+
+logstash_apt_key: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+logstash_apt_url: "deb https://artifacts.elastic.co/packages/{{ logstash_major_version }}/apt stable main"
+logstash_start_service: true
+logstash_conf_dir: /etc/logstash
+
+logstash_user: logstash
+logstash_group: logstash
+
+logstash_jvm_min_heap_size: 256m
+logstash_jvm_max_heap_size: 1g
+
+logstash_jvm_custom_options:
+  - "-Djava.security.egd=file:/dev/./urandom"
+
+logstash_config:
+  path.data: /var/lib/logstash
+  path.config: /etc/logstash/conf.d
+  path.logs: /var/log/logstash
+  log.level: info

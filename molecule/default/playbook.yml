@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+
+  pre_tasks:
+    - name: include tasks for preconf
+      import_tasks: preconf.yml
+
+  roles:
+    - role: ansible-role-logstash

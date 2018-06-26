@@ -1,0 +1,49 @@
+---
+
+- name: Debian - Install apt-transport-https to support https APT downloads
+  apt:
+    name: apt-transport-https
+    state: present
+  when: logstash_use_repository
+
+- name: Debian - Add Elasticsearch repository key
+  apt_key:
+    url: "{{ logstash_apt_key }}"
+    state: present
+  when: logstash_use_repository and logstash_apt_key
+
+- name: Debian - Add Elasticsearch repository
+  apt_repository:
+    repo: "{{ item.repo }}"
+    state: "{{ item.state}}"
+  with_items:
+    - { repo: "{{ logstash_apt_url }}", state: "present" }
+  when: logstash_use_repository
+
+- name: Debian - Include versionlock
+  include: logstash-Debian-version-lock.yml
+  when: logstash_version_lock
+
+- name: Debian - Ensure Logstash is installed
+  apt:
+    name: 'logstash{% if logstash_version is defined and logstash_version != "" %}={{ logstash_version }}{% endif %}'
+    state: present
+    allow_unauthenticated: "{{ 'no' if logstash_apt_key else 'yes' }}"
+    cache_valid_time: 86400
+  when: logstash_use_repository
+  register: debian_logstash_install_from_repo
+  notify: restart logstash
+
+- name: Debian - Download Logstash from url
+  get_url:
+    url: "{% if logstash_custom_package_url is defined %}{{ logstash_custom_package_url }}{% else %}{{ logstash_package_url }}-{{ logstash_version }}-amd64.deb{% endif %}"
+    dest: "/tmp/logstash-{{ logstash_version }}.deb"
+    validate_certs: false
+  when: not logstash_use_repository
+
+- name: Debian - Ensure Logstash is installed from downloaded package
+  apt:
+    deb: "/tmp/logstash-{{ logstash_version }}.deb"
+  when: not logstash_use_repository
+  register: logstash_install_from_package
+  notify: restart logstash

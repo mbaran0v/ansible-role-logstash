@@ -1,0 +1,11 @@
+---
+
+- name: RedHat - install yum-version-lock
+  yum:
+    name: yum-plugin-versionlock
+    state: present
+    update_cache: true
+
+- name: RedHat - lock kibana version
+  shell: yum versionlock delete 0:logstash* ; yum versionlock add logstash{% if logstash_version is defined and logstash_version != "" %}-{{ logstash_version }}{% endif %}
+  tags: skip_ansible_lint

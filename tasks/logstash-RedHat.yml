@@ -1,0 +1,38 @@
+---
+
+- name: Ensure libselinux-python on CentOS 6.x
+  yum:
+    name: libselinux-python
+    state: present
+    update_cache: false
+  when: ( ansible_distribution == "CentOS" ) and ( ansible_distribution_major_version == "6" )
+
+- name: RedHat - add Elasticsearch repo
+  template:
+    src: elasticsearch.repo
+    dest: "/etc/yum.repos.d/elasticsearch-{{ logstash_major_version }}.repo"
+  when: logstash_use_repository
+
+- name: RedHat - include versionlock
+  include: logstash-RedHat-version-lock.yml
+  when: logstash_version_lock
+
+- name: RedHat - Install Logstash
+  yum:
+    name: 'logstash{% if logstash_version is defined and logstash_version != ""  %}-{{ logstash_version }}{% endif %}'
+    state: present
+    update_cache: false
+  when: logstash_use_repository
+  register: redhat_logstash_install_from_repo
+  notify: restart logstash
+  until: '"failed" not in redhat_logstash_install_from_repo'
+  retries: 5
+  delay: 10
+
+- name: RedHat - Install Logstash from url
+  yum:
+    name: "{% if logstash_custom_package_url is defined %}{{ logstash_custom_package_url }}{% else %}{{ logstash_package_url }}-{{ logstash_version }}-x86_64.rpm{% endif %}"
+    state: present
+  when: not logstash_use_repository
+  register: logstash_install_from_package
+  notify: restart logstash

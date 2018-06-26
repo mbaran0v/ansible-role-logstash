@@ -1,0 +1,7 @@
+---
+
+- name: Debian - hold Logstash version
+  command: apt-mark hold logstash
+  register: hold_logstash_result
+  changed_when: "hold_logstash_result.stdout != 'logstash was already set on hold.'"
+  tags: skip_ansible_lint

@@ -1,0 +1,56 @@
+---
+
+- name: create Logstash configuration directory
+  file:
+    path: "{{ logstash_conf_dir }}/conf.d"
+    state: directory
+    owner: "{{ logstash_user }}"
+    group: "{{ logstash_group }}"
+    mode: 0755
+    force: true
+
+- name: create Logstash main configuration
+  copy:
+    content: "{{ logstash_config | to_nice_yaml }}"
+    dest: "{{ logstash_conf_dir }}/logstash.yml"
+    owner: "{{ logstash_user }}"
+    group: "{{ logstash_group }}"
+    mode: 0644
+    force: true
+  notify: restart logstash
+
+- name: create Logstash JVM configuration
+  template:
+    src: jvm.options
+    dest: "{{ logstash_conf_dir }}/jvm.options"
+    owner: "{{ logstash_user }}"
+    group: "{{ logstash_group }}"
+    mode: 0644
+  notify: restart logstash
+
+- name: create Logstash input configuration
+  template:
+    src: input.conf
+    dest: "{{ logstash_conf_dir }}/conf.d/input.conf"
+    owner: "{{ logstash_user }}"
+    group: "{{ logstash_group }}"
+    mode: 0644
+  notify: restart logstash
+
+- name: create Logstash filter configuration
+  template:
+    src: filter.conf
+    dest: "{{ logstash_conf_dir }}/conf.d/filter.conf"
+    owner: "{{ logstash_user }}"
+    group: "{{ logstash_group }}"
+    mode: 0644
+  notify: restart logstash
+
+- name: create Logstash output configuration
+  template:
+    src: output.conf
+    dest: "{{ logstash_conf_dir }}/conf.d/output.conf"
+    owner: "{{ logstash_user }}"
+    group: "{{ logstash_group }}"
+    mode: 0644
+  notify: restart logstash

@@ -1,0 +1,54 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: centos6
+    image: geerlingguy/docker-centos6-ansible:latest
+    privileged: true
+    volume_mounts:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /sbin/init
+  - name: centos7
+    image: geerlingguy/docker-centos7-ansible:latest
+    privileged: true
+    volume_mounts:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /usr/lib/systemd/systemd
+  - name: ubuntu1404
+    image: geerlingguy/docker-ubuntu1404-ansible:latest
+    privileged: true
+    volume_mounts:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /sbin/init
+  - name: ubuntu1604
+    image: geerlingguy/docker-ubuntu1604-ansible:latest
+    privileged: true
+    volume_mounts:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /lib/systemd/systemd
+  - name: debian8
+    image: geerlingguy/docker-debian8-ansible:latest
+    privileged: true
+    volume_mounts:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /lib/systemd/systemd
+  - name: debian9
+    image: geerlingguy/docker-debian9-ansible:latest
+    privileged: true
+    volume_mounts:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /lib/systemd/systemd
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+scenario:
+  name: default
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

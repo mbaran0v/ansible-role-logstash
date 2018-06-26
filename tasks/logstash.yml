@@ -1,0 +1,9 @@
+---
+
+- name: include os-specific tasks
+  include: logstash-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: include os-specific tasks
+  include: logstash-RedHat.yml
+  when: ansible_os_family == 'RedHat'
