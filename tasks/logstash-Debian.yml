@@ -26,7 +26,7 @@
 
 - name: Debian - Ensure Logstash is installed
   apt:
-    name: 'logstash{% if logstash_version is defined and logstash_version != "" %}=1:{{ logstash_version }}.*{% endif %}'
+    name: 'logstash{% if logstash_version is defined and logstash_version != "" %}=1:{{ logstash_version }}-*{% endif %}'
     state: present
     allow_unauthenticated: "{{ 'no' if logstash_apt_key else 'yes' }}"
     cache_valid_time: 86400

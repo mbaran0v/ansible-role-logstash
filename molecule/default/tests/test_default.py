@@ -12,6 +12,12 @@ def test_logstash_config(host):
     assert f.exists
 
 
+def test_logstash_socket(host):
+    s = host.socket('tcp://0.0.0.0:5044')
+
+    assert s.is_listening
+
+
 def test_logstash_serice(host):
     s = host.service('logstash')
 

@@ -2,6 +2,12 @@
 - name: Converge
   hosts: all
 
+  vars:
+    logstash_inputs: |
+      beats {
+        port => 5044
+      }
+
   pre_tasks:
     - name: include tasks for preconf
       import_tasks: preconf.yml

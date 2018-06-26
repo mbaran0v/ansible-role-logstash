@@ -25,3 +25,7 @@ logstash_config:
   path.config: /etc/logstash/conf.d
   path.logs: /var/log/logstash
   log.level: info
+
+logstash_inputs: ""
+logstash_filters: ""
+logstash_outputs: ""
