@@ -1,0 +1,16 @@
+---
+
+- name: Converge
+  hosts: all
+  connection: local
+
+  vars_files:
+    - ../resources/vars/logstash-common.yaml
+
+  pre_tasks:
+    - name: include tasks for preconf
+      import_tasks: ../resources/preconf.yml
+
+  roles:
+    - role: geerlingguy.java
+    - role: ansible-role-logstash

@@ -15,6 +15,7 @@
 - name: Debian - Add Elasticsearch repository
   apt_repository:
     repo: "{{ item.repo }}"
+    filename: "elasticsearch-{{ logstash_major_version }}"
     state: "{{ item.state}}"
   with_items:
     - { repo: "{{ logstash_apt_url }}", state: "present" }

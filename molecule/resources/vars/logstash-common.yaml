@@ -1,0 +1,6 @@
+---
+
+logstash_inputs: |
+  beats {
+    port => 5044
+  }
