@@ -13,7 +13,7 @@ def test_logstash_config(host):
 
 
 def test_logstash_socket(host):
-    s = host.socket('tcp://0.0.0.0:5044')
+    s = host.socket('tcp://:::5044')
 
     assert s.is_listening
 
