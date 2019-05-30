@@ -23,11 +23,7 @@
     state: present
     update_cache: false
   when: logstash_use_repository
-  register: redhat_logstash_install_from_repo
   notify: restart logstash
-  until: '"failed" not in redhat_logstash_install_from_repo'
-  retries: 5
-  delay: 20
 
 - name: RedHat - Install Logstash from url
   yum:
