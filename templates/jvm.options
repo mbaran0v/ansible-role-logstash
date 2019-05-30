@@ -2,8 +2,8 @@
 
 # Xms represents the initial size of total heap space
 # Xmx represents the maximum size of total heap space
--Xms{{ logstash_jvm_min_heap_size|default('256m')}}
--Xmx{{ logstash_jvm_max_heap_size|default('1g')}}
+-Xms{{ logstash_jvm_min_heap_size }}
+-Xmx{{ logstash_jvm_max_heap_size }}
 
 {% for i in logstash_jvm_custom_options %}
 {{ i }}

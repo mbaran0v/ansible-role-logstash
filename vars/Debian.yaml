@@ -1,0 +1,4 @@
+---
+
+logstash_apt_key: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+logstash_apt_url: "deb https://artifacts.elastic.co/packages/{{ logstash_major_version }}/apt stable main"

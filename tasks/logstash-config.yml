@@ -1,17 +1,21 @@
 ---
 
-- name: create Logstash configuration directory
+- name: create Logstash directories
   file:
-    path: "{{ logstash_conf_dir }}/conf.d"
+    path: "{{ item }}"
     state: directory
     owner: "{{ logstash_user }}"
     group: "{{ logstash_group }}"
     mode: 0755
     force: true
+  with_items:
+    - "{{ logstash_conf_dir }}/conf.d"
+    - "{{ logstash_data_dir }}"
+    - "{{ logstash_log_dir }}"
 
 - name: create Logstash main configuration
   copy:
-    content: "{{ logstash_config | to_nice_yaml }}"
+    content: logstash.conf
     dest: "{{ logstash_conf_dir }}/logstash.yml"
     owner: "{{ logstash_user }}"
     group: "{{ logstash_group }}"
@@ -54,3 +58,12 @@
     group: "{{ logstash_group }}"
     mode: 0644
   notify: restart logstash
+
+- name: create Logstash logrotate configuration
+  template:
+    src: logrotate.conf
+    dest: "{{ logrotate_conf_dir }}/logstash"
+    owner: root
+    group: root
+    mode: 0644
+    force: true

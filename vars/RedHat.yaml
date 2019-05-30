@@ -1,0 +1,4 @@
+---
+
+logstash_yum_key: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+logstash_yum_url: "https://artifacts.elastic.co/packages/{{ logstash_major_version }}/yum"
