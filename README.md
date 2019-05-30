@@ -7,7 +7,6 @@
 Ansible role for 7.x/6.x/5.x [Logstash](https://www.elastic.co/products/logstash). Currently this works on Debian and RedHat based linux systems. Tested platforms are:
 
 * Ubuntu 16.04
-* CentOS 7
 
 Requirements
 ------------
