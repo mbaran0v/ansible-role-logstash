@@ -1,15 +1,17 @@
 ---
 
-logstash_major_version: "6.x"
-logstash_version: "6.3.0"
+logstash_major_version: "7.x"
+logstash_version: "7.1.1"
+
+logstash_package_url: https://artifacts.elastic.co/downloads/logstash/logstash
 
 logstash_version_lock: false
 logstash_use_repository: true
 
-logstash_apt_key: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
-logstash_apt_url: "deb https://artifacts.elastic.co/packages/{{ logstash_major_version }}/apt stable main"
-logstash_start_service: true
 logstash_conf_dir: /etc/logstash
+logstash_data_dir: /var/lib/logstash
+logstash_log_dir: /var/log/logstash
+logstash_log_level: info
 
 logstash_user: logstash
 logstash_group: logstash
@@ -21,11 +23,15 @@ logstash_jvm_custom_options:
   - "-Djava.security.egd=file:/dev/./urandom"
 
 logstash_config:
-  path.data: /var/lib/logstash
-  path.config: /etc/logstash/conf.d
-  path.logs: /var/log/logstash
-  log.level: info
+  path.data: "{{ logstash_data_dir }}"
+  path.config: "{{ logstash_conf_dir }}/conf.d"
+  path.logs: "{{ logstash_log_dir }}"
+  log.level: "{{ logstash_log_level }}"
+  http.post: "127.0.0.1"
+  http.port: 9600
 
 logstash_inputs: ""
 logstash_filters: ""
 logstash_outputs: ""
+
+logrotate_conf_dir: /etc/logrotate.d

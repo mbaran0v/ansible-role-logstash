@@ -1,0 +1,12 @@
+---
+
+- name: Converge
+  hosts: all
+  connection: local
+
+  vars_files:
+    - ../resources/vars/main.yaml
+
+  roles:
+    - role: geerlingguy.java
+    - role: ansible-role-logstash
