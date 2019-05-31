@@ -27,7 +27,7 @@ logstash_config:
   path.config: "{{ logstash_conf_dir }}/conf.d"
   path.logs: "{{ logstash_log_dir }}"
   log.level: "{{ logstash_log_level }}"
-  http.post: "127.0.0.1"
+  http.host: "127.0.0.1"
   http.port: 9600
 
 logstash_inputs: ""

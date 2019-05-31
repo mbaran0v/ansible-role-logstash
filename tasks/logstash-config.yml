@@ -14,8 +14,8 @@
     - "{{ logstash_log_dir }}"
 
 - name: create Logstash main configuration
-  copy:
-    content: logstash.conf
+  template:
+    src: logstash.conf
     dest: "{{ logstash_conf_dir }}/logstash.yml"
     owner: "{{ logstash_user }}"
     group: "{{ logstash_group }}"
