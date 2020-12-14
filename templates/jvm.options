@@ -19,10 +19,9 @@
 ################################################################
 
 ## GC configuration
--XX:+UseParNewGC
--XX:+UseConcMarkSweepGC
--XX:CMSInitiatingOccupancyFraction=75
--XX:+UseCMSInitiatingOccupancyOnly
+{% for i in logstash_jvm_gc_options %}
+{{ i }}
+{% endfor %}
 
 ## optimizations
 

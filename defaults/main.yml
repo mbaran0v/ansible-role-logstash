@@ -22,6 +22,12 @@ logstash_jvm_max_heap_size: 1g
 logstash_jvm_custom_options:
   - "-Djava.security.egd=file:/dev/./urandom"
 
+logstash_jvm_gc_options:
+  - "-XX:+UseParNewGC"
+  - "-XX:+UseConcMarkSweepGC"
+  - "-XX:CMSInitiatingOccupancyFraction=75"
+  - "-XX:+UseCMSInitiatingOccupancyOnly"
+
 logstash_config:
   path.data: "{{ logstash_data_dir }}"
   path.config: "{{ logstash_conf_dir }}/conf.d"
